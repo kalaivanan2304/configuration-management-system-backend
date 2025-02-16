@@ -1,0 +1,41 @@
+server:
+  port: 8081
+spring:
+  profiles:
+    default: local
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+  # It's recommended to store the username, password and secret in AWS secret manager if service deployed on AWS cloud
+  datasource:
+    url: jdbc:mysql://configuration-management-system-backend-mysql-db-1:3306/sodatech_db?allowPublicKeyRetrieval=true&useSSL=false
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+    jpa:
+      database-platform: org.hibernate.dialect.MySQL8Dialect
+      hibernate:
+        ddl-auto: update
+      show-sql: true
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+  # It's recommended to store the username, password and secret in AWS secret manager if service deployed on AWS cloud
+  datasource:
+    url: jdbc:mysql://configuration-management-system-backend-mysql-db-1:3306/sodatech_db?allowPublicKeyRetrieval=true&useSSL=false
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+    jpa:
+      database-platform: org.hibernate.dialect.MySQL8Dialect
+      hibernate:
+        ddl-auto: update
+      show-sql: true

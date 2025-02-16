@@ -1,0 +1,5 @@
+rootProject.name = 'configuration-management-system-backend'
+include 'user-service'
+include 'config-service'
+include 'test'
+

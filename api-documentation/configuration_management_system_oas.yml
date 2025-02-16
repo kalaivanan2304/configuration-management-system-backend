@@ -1,0 +1,165 @@
+openapi: 3.0.3
+info:
+  title: Configuration Management System
+  description: API documentation for the Configuration Management System.
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:8081/sodatech/v1
+    description: User Service
+  - url: http://localhost:8082/sodatech/v1
+    description: Configuration Service
+
+paths:
+  /user/register:
+    post:
+      summary: Register a new user
+      operationId: registerUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+                role:
+                  type: string
+      responses:
+        "201":
+          description: User successfully registered
+        "400":
+          description: Invalid input data
+        "409":
+          description: User already exists
+
+  /user/login:
+    post:
+      summary: Login user
+      operationId: loginUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+      responses:
+        "200":
+          description: User logged in successfully
+        "401":
+          description: Unauthorized
+
+  /configs:
+    get:
+      summary: Get all configurations
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: List of configurations
+        "403":
+          description: Forbidden
+
+    post:
+      summary: Create a new configuration
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                key:
+                  type: string
+                value:
+                  type: string
+                description:
+                  type: string
+      responses:
+        "201":
+          description: Configuration created
+        "400":
+          description: Invalid input data
+        "401":
+          description: Unauthorized
+
+  /configs/{id}:
+    get:
+      summary: Get configuration by ID
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Configuration details
+        "404":
+          description: Configuration not found
+
+    put:
+      summary: Update configuration
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                key:
+                  type: string
+                value:
+                  type: string
+                description:
+                  type: string
+      responses:
+        "200":
+          description: Configuration updated
+        "400":
+          description: Invalid input data
+        "403":
+          description: Forbidden
+
+    delete:
+      summary: Delete configuration
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Configuration deleted
+        "403":
+          description: Forbidden
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
