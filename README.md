@@ -66,8 +66,8 @@ username: {username}
 password: {password}
 
 Update jwt.secret-key in secret-config.properties. if required.
-JWT_SECRET={your_secret_key}
-```~~~~
+jwt.secret-key={your_secret_key}
+```
 
 
 
